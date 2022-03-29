@@ -1,0 +1,66 @@
+
+<<<<Change Detection>>>>
+
+Cada vez que ocurre un evento en la aplicación, 
+Angular realiza una comprobación de detección de cambios para validar si hay algún 
+cambio en un valor y requiere actualización de la vista.
+Este proceso es muy rápido, en el flujo unidireccional de los datos, 
+Angular verificará cada componente que puedan haberse visto afectado para 
+revisar si hubo cambios, y a gran medida esta funcionalidad estará ligada al 
+rendimiento de la aplicación.
+Para evitar esto podemos decirle a Angular en que momento realice estas acciones, 
+utilizando la estrategia OnPush.
+OnPush cambiará la estrategia de detección de cambios de un componente, 
+esto quiere decir que cuando se emita una detección de cambios esta omitirá el 
+componente si su valor de entrada no ha sido cambiado. Por ende todos los componentes
+dentro de este también se omitirán, con esto se reduce el proceso de detección 
+de cambios.
+
+
+<<<<<<<<Evita los Getters>>>>>>>>
+
+En el ejemplo anterior obtenemos el valor de entrada de tasks mediante getter y setter, 
+no hay mucho problema en usar estas funciones que nos permite javascript 
+desde ES2015, son bastante útiles en ciertos casos, en otros no tanto 
+ya que cada vez que se va a leer el valor de la variable se van a ejecutar 
+estas funciones, es decir cada que haya un cambio ejecutará un setter
+ para asignar el nuevo valor a la variable y un getter para obtener en l
+ a vista el valor reciente por que lo que sería el mismo caso de realizar
+  cálculos complejos en el View.
+
+
+<<<<<<TrackBy>>>>>>>>>
+
+Manipular el DOM es una tarea costosa para la aplicación, y esto se
+ vuelve evidente en un sencillo listado, usualmente utilizamos la directiva
+  estructural *ngFor para realizar esta tarea.
+Al Iterar un listado de elementos y mostrarlo en el DOM en una aplicación 
+con Angular, lo que hace *ngFor es una validación de igualdad para comprobar 
+si los elementos han cambiado, esto lo hace mediante una referencia y no por 
+las propiedades del objeto.
+
+Una vez pasado 1s se agregará otro objeto al arreglo, lo que provocará 
+que se ejecute una detección de cambios y angular pinte nuevamente los 
+elementos en nuestro DOM, a pesar de que 2 de ellos ya existían en el DOM. 
+Este problema se resuelve fácilmente implementando una función trackBy, 
+con esto angular puede detectar que elemento se ha añadido o removido del 
+listado de acuerdo a un identificador único, por lo que el cambió solo se 
+hará a ese elemento.
+
+
+<<<<<<<Evitar cálculos complejos en la Vista>>>>>
+
+Realizar cálculos para transformar información en la vista es 
+una mala opción ya que el problema viene por que Angular tiene
+ que volver ejecutar la función cada que hay una detección de cambios,
+  y si la función realiza una tarea grande puede ser 
+costoso para el rendimiento de la aplicación.
+
+
+<<<<<<<Lazy Loading>>>>>>
+
+Lazy loading es una de las mejores y más poderosas características de Angular,
+ y una de las más utilizadas. Es un mecanismo donde en lugar de cargar la aplicación completa un inicio, se carga en partes según se van necesitando, lo cual reduce el tiempo de carga inicial en la aplicación, en pocas palabras no cargará algo que no se ocupe.
+La mayoría de las aplicaciones contienen más de una página o bien módulos por
+ lo que al si no se utilizara Lazy loading cargaría todos esos módulo o páginas 
+ desde un inicio, incluso si no te encuentras en la página.
